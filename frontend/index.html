@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Virtual Manager</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            height: 100vh;
+            background-color: #f5f5f5;
+        }
+        .container {
+            display: flex;
+            width: 90%;
+        }
+        .video-section, .live-section {
+            flex: 1;
+            text-align: center;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        video {
+            width: 100%;
+            border-radius: 10px;
+        }
+        #capture-btn {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Left Side: Virtual AI Manager Video -->
+        <div class="video-section">
+            <h2>📹 AI Virtual Manager</h2>
+            <video id="ai-video" controls>
+                <source src="ai_videos/intro.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>                      
+        </div>
+
+        <!-- Right Side: User Live Camera Feed -->
+        <div class="live-section">
+            <h2>🎥 Live Video Feed</h2>
+            <video id="user-video" autoplay></video>
+            <br>
+            <button id="capture-btn">📸 Capture Image</button>
+            <canvas id="canvas" style="display: none;"></canvas>
+        </div>
+    </div>
+
+    <script>
+        // Get user video feed
+        async function startCamera() {
+            const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+            document.getElementById("user-video").srcObject = stream;
+        }
+
+        // Capture image from video
+        document.getElementById("capture-btn").addEventListener("click", function() {
+            const video = document.getElementById("user-video");
+            const canvas = document.getElementById("canvas");
+            const context = canvas.getContext("2d");
+
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+            // Convert image to Base64 and log it (can be sent to backend)
+            const imageData = canvas.toDataURL("image/png");
+            console.log("Captured Image:", imageData);
+            alert("Image Captured! Check the console for Base64 data.");
+        });
+
+        startCamera(); // Start live video feed
+    </script>
+</body>
+</html>
