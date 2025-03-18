@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FinanceAssist AI - Login/Registration</title>
+    <style>
+        :root {
+            --primary-color: #0066cc;
+            --secondary-color: #004080;
+            --accent-color: #ff9900;
+            --light-color: #f8f9fa;
+            --dark-color: #343a40;
+            --success-color: #28a745;
+            --warning-color: #ffc107;
+            --danger-color: #dc3545;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo span {
+            color: var(--accent-color);
+        }
+        
+        .nav-links a {
+            margin-left: 30px;
+            text-decoration: none;
+            color: var(--dark-color);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+        
+        .primary-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        .primary-btn:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        .auth-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: calc(100vh - 80px);
+            padding: 40px 0;
+        }
+        
+        .auth-card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 800px;
+            overflow: hidden;
+        }
+        
+        .auth-tabs {
+            display: flex;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .auth-tab {
+            padding: 15px 0;
+            width: 50%;
+            text-align: center;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .auth-tab.active {
+            color: var(--primary-color);
+            border-bottom: 3px solid var(--primary-color);
+        }
+        
+        .auth-forms {
+            padding: 30px;
+        }
+        
+        .form-section {
+            display: none;
+        }
+        
+        .form-section.active {
+            display: block;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        
+        .form-group .input-error {
+            color: var(--danger-color);
+            font-size: 14px;
+            margin-top: 5px;
+            display: none;
+        }
+        
+        .form-group.error input {
+            border-color: var(--danger-color);
+        }
+        
+        .form-group.error .input-error {
+            display: block;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .form-row .form-group {
+            flex: 1;
+        }
+        
+        .file-upload {
+            border: 2px dashed #ddd;
+            padding: 20px;
+            text-align: center;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        .file-upload:hover {
+            border-color: var(--primary-color);
+        }
+        
+        .upload-btn {
+            background-color: var(--light-color);
+            color: var(--primary-color);
+            border: 1px solid var(--primary-color);
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+        
+        .upload-btn:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .otp-container {
+            display: none;
+            margin-top: 20px;
+        }
+        
+        .otp-inputs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        
+        .otp-input {
+            width: 50px;
+            height: 50px;
+            text-align: center;
+            font-size: 24px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        
+        .otp-message {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .password-requirements {
+            background-color: var(--light-color);
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+        
+        .password-requirements ul {
+            margin-left: 20px;
+        }
+        
+        .password-requirements li {
+            margin-bottom: 5px;
+        }
+        
+        .success-message {
+            text-align: center;
+            color: var(--success-color);
+            padding: 20px;
+            display: none;
+        }
+        
+        .error-message {
+            text-align: center;
+            color: var(--danger-color);
+            padding: 20px;
+            display: none;
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+        
+        .resend-otp {
+            color: var(--primary-color);
+            cursor: pointer;
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 768px) {
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .auth-card {
+                margin: 0 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <a href="index.html" class="logo">Finance<span>Assist</span> AI</a>
+                <div class="nav-links">
+                    <a href="index.html#features">Features</a>
+                    <a href="index.html#how-it-works">How It Works</a>
+                    <a href="index.html#demo">Demo</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-tabs">
+                <div class="auth-tab active" id="login-tab" onclick="showTab('login')">Login</div>
+                <div class="auth-tab" id="register-tab" onclick="showTab('register')">Register</div>
+            </div>
+            <div class="auth-forms">
+                <!-- Login Form -->
+                <div class="form-section active" id="login-form">
+                    <h2>Welcome Back!</h2>
+                    <p>Log in to your FinanceAssist AI account</p>
+                    
+                    <div class="form-group">
+                        <label for="login-method">Login Method</label>
+                        <select id="login-method" onchange="toggleLoginMethod()">
+                            <option value="username">Username</option>
+                            <option value="phone">Phone Number</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group" id="username-field">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" placeholder="Enter your username">
+                        <span class="input-error">Please enter a valid username</span>
+                    </div>
+                    
+                    <div class="form-group" id="phone-field" style="display: none;">
+                        <label for="login-phone">Phone Number</label>
+                        <input type="text" id="login-phone" placeholder="Enter your phone number">
+                        <span class="input-error">Please enter a valid 10-digit phone number</span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="login-password">Password</label>
+                        <input type="password" id="login-password" placeholder="Enter your password">
+                        <span class="input-error">Please enter your password</span>
+                    </div>
+                    
+                    <button class="primary-btn" style="width: 100%;" onclick="loginUser()">Log In</button>
+                    
+                    <!-- OTP Verification for Login -->
+                    <div class="otp-container" id="login-otp-container">
+                        <div class="otp-message">
+                            Please enter the 4-digit OTP sent to your registered phone number
+                        </div>
+                        <div class="otp-inputs">
+                            <input type="text" class="otp-input" maxlength="1" onkeyup="moveToNext(this, 1)">
+                            <input type="text" class="otp-input" maxlength="1" onkeyup="moveToNext(this, 2)">
+                            <input type="text" class="otp-input" maxlength="1" onkeyup="moveToNext(this, 3)">
+                            <input type="text" class="otp-input" maxlength="1" onkeyup="moveToNext(this, 4)">
+                        </div>
+                        <div class="otp-message">
+                            Didn't receive the OTP? <span class="resend-otp" onclick="resendOTP()">Resend OTP</span>
+                        </div>
+                        <button class="primary-btn" style="width: 100%;" onclick="verifyOTP('login')">Verify OTP</button>
+                    </div>
+                    
+                    <div class="success-message" id="login-success">
+                        Login successful! Redirecting to your dashboard...
+                    </div>
+                    
+                    <div class="error-message" id="login-error">
+                        Invalid credentials. Please try again.
+                    </div>
+                </div>
+                
+                <!-- Registration Form -->
+                <div class="form-section" id="register-form">
+                    <h2>Create Account</h2>
+                    <p>Join FinanceAssist AI to apply for loans easily</p>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="full-name">Full Name</label>
+                            <input type="text" id="full-name" placeholder="Enter your full name">
+                            <span class="input-error">Please enter your full name</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="age">Age</label>
+                            <input type="number" id="age" min="18" placeholder="Enter your age (18+)">
+                            <span class="input-error">You must be at least 18 years old</span>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="dob">Date of Birth</label>
+                        <input type="date" id="dob">
+                        <span class="input-error">Please enter a valid date of birth</span>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="pan">PAN Card Number</label>
+                            <input type="text" id="pan" placeholder="Enter your PAN card number">
+                            <span class="input-error">Please enter a valid PAN card number</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="aadhar">Aadhar Card Number</label>
+                            <input type="text" id="aadhar" placeholder="Enter your Aadhar card number">
+                            <span class="input-error">Please enter a valid 12-digit Aadhar number</span>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="text" id="phone" placeholder="Enter your phone number">
+                        <span class="input-error">Please enter a valid 10-digit phone number</span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" placeholder="Enter your email address">
+                        <span class="input-error">Please enter a valid email address</span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="address">Address</label>
+                        <input type="text" id="address" placeholder="Enter your full address">
+                        <span class="input-error">Please enter your address</span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="passport-photo">Passport Size Photo</label>
+                        <div class="file-upload">
+                            <p>Upload your passport size photo</p>
+                            <button class="upload-btn">Choose File</button>
+                            <input type="file" id="passport-photo" accept="image/*" style="display: none;">
+                        </div>
+                        <span class="input-error">Please upload a passport size photo</span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="new-username">Choose Username</label>
+                        <input type="text" id="new-username" placeholder="Enter desired username">
+                        <span class="input-error">Username must be 6-20 characters long</span>
+                        <div class="password-requirements">
+                            <strong>Username requirements:</strong>
+                            <ul>
+                                <li>6-20 characters long</li>
+                                <li>Can contain letters, numbers, and underscores</li>
+                                <li>Must start with a letter</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="new-password">Create Password</label>
+                        <input type="password" id="new-password" placeholder="Enter password">
+                        <span class="input-error">Password doesn't meet requirements</span>
+                        <div class="password-requirements">
+                            <strong>Password requirements:</strong>
+                            <ul>
+                                <li>At least 8 characters long</li>
+                                <li>Contains at least one uppercase letter</li>
+                                <li>Contains at least one lowercase letter</li>
+                                <li>Contains at least one number</li>
+                                <li>Contains at least one special character</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="confirm-password">Confirm Password</label>
+                        <input type="password" id="confirm-password" placeholder="Confirm password">
+                        <span class="input-error">Passwords do not match</span>
+                    </div>
+                    
+                    <button class="primary-btn" style="width: 100%;" onclick="registerUser()">Register</button>
+                    
+                    <!-- OTP Verification for Registration -->
+                    <div class="otp-container" id="register-otp-container">
+                        <div class="otp-message">
+                            Please enter the 4-digit OTP sent to your registered phone number
+                        </div>
+                        <div class="otp-inputs">
+                            <input type="text" class="otp-input" maxlength="1" onkeyup="moveToNext(this, 1)">
+                            <input type="text" class="otp-input" maxlength="1" onkeyup="moveToNext(this, 2)">
+                            <input type="text" class="otp-input" maxlength="1" onkeyup="moveToNext(this, 3)">
+                            <input type="text" class="otp-input" maxlength="1" onkeyup="moveToNext(this, 4)">
+                        </div>
+                        <div class="otp-message">
+                            Didn't receive the OTP? <span class="resend-otp" onclick="resendOTP()">Resend OTP</span>
+                        </div>
+                        <button class="primary-btn" style="width: 100%;" onclick="verifyOTP('register')">Verify OTP</button>
+                    </div>
+                    
+                    <div class="success-message" id="register-success">
+                        Registration successful! You can now log in.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 FinanceAssist AI. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Show/hide tabs
+        function showTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.form-section').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            document.querySelectorAll('.auth-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected tab
+            document.getElementById(tabName + '-form').classList.add('active');
+            document.getElementById(tabName + '-tab').classList.add('active');
+        }
+        
+        // Toggle login method
+        function toggleLoginMethod() {
+            const method = document.getElementById('login-method').value;
+            if (method === 'username') {
+                document.getElementById('username-field').style.display = 'block';
+                document.getElementById('phone-field').style.display = 'none';
+            } else {
+                document.getElementById('username-field').style.display = 'none';
+                document.getElementById('phone-field').style.display = 'block';
+            }
+        }
+        
+        // Login user
+        function loginUser() {
+            // Basic validation
+            let isValid = true;
+            const method = document.getElementById('login-method').value;
+            
+            if (method === 'username') {
+                const username = document.getElementById('username').value;
+                if (!username) {
+                    showError('username');
+                    isValid = false;
+                } else {
+                    hideError('username');
+                }
+            } else {
+                const phone = document.getElementById('login-phone').value;
+                if (!phone || phone.length !== 10 || isNaN(phone)) {
+                    showError('login-phone');
+                    isValid = false;
+                } else {
+                    hideError('login-phone');
+                }
+            }
+            
+            const password = document.getElementById('login-password').value;
+            if (!password) {
+                showError('login-password');
+                isValid = false;
+            } else {
+                hideError('login-password');
+            }
+            
+            if (isValid) {
+                // Show OTP container
+                document.getElementById('login-otp-container').style.display = 'block';
+                
+                // In a real application, this would send an OTP to the user's phone
+                console.log('Sending OTP to user...');
+            }
+        }
+        
+        // Register user
+        function registerUser() {
+            // Basic validation
+            let isValid = true;
+            
+            // Validate full name
+            const fullName = document.getElementById('full-name').value;
+            if (!fullName) {
+                showError('full-name');
+                isValid = false;
+            } else {
+                hideError('full-name');
+            }
+            
+            // Validate age
+            const age = document.getElementById('age').value;
+            if (!age || age < 18) {
+                showError('age');
+                isValid = false;
+            } else {
+                hideError('age');
+            }
+            
+            // Validate DOB
+            const dob = document.getElementById('dob').value;
+            if (!dob) {
+                showError('dob');
+                isValid = false;
+            } else {
+                hideError('dob');
+            }
+            
+            // Validate PAN
+            const pan = document.getElementById('pan').value;
+            if (!pan || pan.length !== 10) {
+                showError('pan');
+                isValid = false;
+            } else {
+                hideError('pan');
+            }
+            
+            // Validate Aadhar
+            const aadhar = document.getElementById('aadhar').value;
+            if (!aadhar || aadhar.length !== 12 || isNaN(aadhar)) {
+                showError('aadhar');
+                isValid = false;
+            } else {
+                hideError('aadhar');
+            }
+            
+            // Validate phone
+            const phone = document.getElementById('phone').value;
+            if (!phone || phone.length !== 10 || isNaN(phone)) {
+                showError('phone');
+                isValid = false;
+            } else {
+                hideError('phone');
+            }
+            
+            // Validate email
+            const email = document.getElementById('email').value;
+            if (!email || !isValidEmail(email)) {
+                showError('email');
+                isValid = false;
+            } else {
+                hideError('email');
+            }
+            
+            // Validate address
+            const address = document.getElementById('address').value;
+            if (!address) {
+                showError('address');
+                isValid = false;
+            } else {
+                hideError('address');
+            }
+            
+            // Validate username
+            const username = document.getElementById('new-username').value;
+            if (!username || username.length < 6 || username.length > 20 || !username.match(/^[a-zA-Z][a-zA-Z0-9_]{5,19}$/)) {
+                showError('new-username');
+                isValid = false;
+            } else {
+                hideError('new-username');
+            }
+            
+            // Validate password
+            const password = document.getElementById('new-password').value;
+            if (!password || !isValidPassword(password)) {
+                showError('new-password');
+                isValid = false;
+            } else {
+                hideError('new-password');
+            }
+            
+            // Validate confirm password
+            const confirmPassword = document.getElementById('confirm-password').value;
+            if (password !== confirmPassword) {
+                showError('confirm-password');
+                isValid = false;
+            } else {
+                hideError('confirm-password');
+            }
+            
+            if (isValid) {
+                // Show OTP container
+                document.getElementById('register-otp-container').style.display = 'block';
+                
+                // In a real application, this would send an OTP to the user's phone
+                console.log('Sending OTP to user...');
+            }
+        }
+        
+        // Helper function to show error
+        function showError(fieldId) {
+            const field = document.getElementById(fieldId).parentNode;
+            field.classList.add('error');
+        }
+        
+        // Helper function to hide error
+        function hideError(fieldId) {
+            const field = document.getElementById(fieldId).parentNode;
+            field.classList.remove('error');
+        }
+        
+        // Helper function to validate email
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+        
+        // Helper function to validate password
+        function isValidPassword(password) {
+            // At least 8 characters, one uppercase, one lowercase, one number, one special character
+            const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+            return passwordRegex.test(password);
+        }
+        
+        // Helper function to move to next OTP input
+        function moveToNext(field, nextIndex) {
+            if (field.value.length >= field.maxLength) {
+                const inputs = document.querySelectorAll('.otp-input');
+                if (nextIndex < inputs.length) {
+                    inputs[nextIndex].focus();
+                }
+            }
+        }
+        
+        // Resend OTP
+        function resendOTP() {
+            // In a real application, this would resend the OTP
+            alert('OTP resent successfully!');
+        }
+        
+        // Verify OTP
+        function verifyOTP(type) {
+            // In a real application, this would verify the OTP
+            
+            // Get all OTP inputs
+            const otpContainer = document.getElementById(type + '-otp-container');
+            const otpInputs = otpContainer.querySelectorAll('.otp-input');
+            
+            // Collect OTP values
+            let otp = '';
+            otpInputs.forEach(input => {
+                otp += input.value;
+            });
+            
+            // Validate OTP (in a real app, this would be verified against the server)
+            if (otp.length === 4) {
+                // Hide OTP container
+                otpContainer.style.display = 'none';
+                
+                // Show success message
+                document.getElementById(type + '-success').style.display = 'block';
+                
+                // If login, redirect to dashboard after 2 seconds
+                if (type === 'login') {
+                    setTimeout(() => {
+                        window.location.href = 'dashboard.html';
+                    }, 2000);
+                } else {
+                    // If register, switch to login tab after 2 seconds
+                    setTimeout(() => {
+                        showTab('login');
+                    }, 2000);
+                }
+            } else {
+                alert('Please enter a valid 4-digit OTP');
+            }
+        }
+        
+        // File upload handling
+        document.querySelector('.upload-btn').addEventListener('click', function() {
+            document.getElementById('passport-photo').click();
+        });
+        
+        document.getElementById('passport-photo').addEventListener('change', function() {
+            const fileName = this.files[0]?.name || 'No file chosen';
+            document.querySelector('.file-upload p').textContent = fileName;
+        });
+    </script>
+</body>
+</html>

@@ -580,7 +580,7 @@
                     <a href="#how-it-works">How It Works</a>
                     <a href="#demo">Demo</a>
                 </div>
-                <button class="primary-btn" onclick="openModal()">Apply for Loan</button>
+                <button class="primary-btn" onclick="redirectToLogin()">Apply for Loan</button>
             </nav>
         </div>
     </header>
@@ -589,7 +589,7 @@
         <div class="container">
             <h1>Meet Your AI Branch Manager</h1>
             <p>Experience the future of banking with our video-based loan assistance. Apply for loans without visiting a physical branch, all with a human-like experience.</p>
-            <button class="primary-btn" onclick="openModal()">Get Started</button>
+            <button class="primary-btn" onclick="redirectToLogin()">Get Started</button>
         </div>
     </section>
 
@@ -708,7 +708,7 @@
                     <h3>User-Friendly Interface</h3>
                     <p>Our intuitive interface makes loan applications simple and straightforward. The AI Branch Manager guides you through each step, asking relevant questions and providing clear instructions.</p>
                     <p>With facial verification and document processing capabilities, you can complete your loan application securely and efficiently, all from the comfort of your home.</p>
-                    <button class="primary-btn" style="margin-top: 20px;" onclick="openModal()">Try It Now</button>
+                    <button class="primary-btn" style="margin-top: 20px;" onclick="redirectToLogin()">Try It Now</button>
                 </div>
                 <div class="interface-image">
                     <img src="/api/placeholder/500/300" alt="Application interface">
@@ -722,7 +722,7 @@
             <h2>Ready to Experience the Future of Banking?</h2>
             <p>Apply for your loan today with our AI Branch Manager and enjoy a seamless, branch-like experience from the comfort of your home.</p>
             <div class="cta-buttons">
-                <button class="primary-btn" onclick="openModal()">Apply Now</button>
+                <button class="primary-btn" onclick="redirectToLogin()">Apply Now</button>
                 <button class="secondary-btn">Learn More</button>
             </div>
         </div>
@@ -816,12 +816,8 @@
     </div>
 
     <script>
-        function openModal() {
-            document.getElementById('loanModal').style.display = 'block';
-        }
-        
-        function closeModal() {
-            document.getElementById('loanModal').style.display = 'none';
+       function redirectToLogin() {
+            window.location.href = 'login.html';
         }
     </script>
 </body>
